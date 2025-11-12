@@ -20,13 +20,17 @@
     <div class="preloader">
         <div class="preloader-content">
             <div class="logo-loader">
-                <div class="logo-icon bg-primary rounded-circle d-flex align-items-center justify-content-center">
-                    <i class="fas fa-laptop-code text-white"></i>
-                </div>
-                <span class="fw-bold fs-3 text-primary ms-2">JINTEX</span>
-            </div>
-            <div class="progress mt-4" style="width: 200px;">
-                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
+                <!-- Logo para preloader - Puede ser imagen, video o GIF -->
+                <img src="img/logo.png" alt="Jintex Logo" class="preloader-logo">
+                
+                <!-- Opción para video MP4 (por si llego a hacer el fondo animado) -->
+                <!-- <video autoplay muted loop playsinline class="preloader-video">
+                    <source src="img/logo-animacion.mp4" type="video/mp4">
+                    <img src="img/logo-jintex.png" alt="Jintex Logo">
+                </video> -->
+                
+                <!-- Opción para GIF animado -->
+                <!-- <img src="img/logo-animado.gif" alt="Jintex Logo" class="preloader-logo"> -->
             </div>
         </div>
     </div>
@@ -36,10 +40,8 @@
         <div class="container">
             <a class="navbar-brand" href="jintex.html">
                 <div class="d-flex align-items-center">
-                    <div class="logo-icon bg-primary rounded-circle me-2 d-flex align-items-center justify-content-center">
-                        <i class="fas fa-laptop-code text-white"></i>
-                    </div>
-                    <span class="fw-bold fs-3 text-primary">JINTEX</span>
+                    <!-- Logo para navbar -->
+                    <img src="img/logo.png" alt="Jintex Logo" class="navbar-logo">
                 </div>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -51,16 +53,16 @@
                         <a class="nav-link active" href="jintex.html">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="red.html">Red</a>
+                        <a class="nav-link" href="pages/red.html">Red</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="maquinaria.html">Maquinaria</a>
+                        <a class="nav-link" href="pages/maquinaria.html">Maquinaria</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="licencias.html">Licencias</a>
+                        <a class="nav-link" href="pages/licencias.html">Licencias</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="formulation.html">Formulación</a>
+                        <a class="nav-link" href="pages/formulario.html">Formulario</a>
                     </li>
                     <li class="nav-item ms-2">
                         <a class="btn btn-primary btn-sm" href="#contacto">Contacto</a>
@@ -116,7 +118,7 @@
                         <div class="floating-card card-2 shadow">
                             <div class="card-body p-3">
                                 <i class="fas fa-server text-success mb-2"></i>
-                                <h6 class="mb-0">Servidores</h6>
+                                <h7 class="mb-1">Servidores</h7>
                             </div>
                         </div>
                         <div class="floating-card card-3 shadow">
@@ -182,7 +184,7 @@
         </div>
     </section>
 
-    <!-- Nuestras Categorías - Carousel Mejorado -->
+    <!-- Nuestras Categorías - Carousel -->
     <section id="categorias" class="py-5 position-relative">
         <div class="container py-5">
             <div class="row mb-5">
@@ -224,12 +226,12 @@
                                     </div>
                                 </div>
                                 <div class="d-flex gap-3 mt-auto">
-                                    <a href="red.html" class="btn btn-light btn-lg px-4">Más Información</a>
-                                    <a href="#productos" class="btn btn-outline-light btn-lg px-4">Ver Productos</a>
+                                    <a href="pages/red.html" class="btn btn-light btn-lg px-4">Más Información</a>
+                                    <a href="pages/red.html" class="btn btn-outline-light btn-lg px-4">Ver Productos</a>
                                 </div>
                             </div>
                             <div class="col-lg-6 category-image">
-                                <img src="https://images.unsplash.com/photo-1592913402121-0a5d63c94258?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80" alt="Dispositivos de Red" class="img-fluid w-100 h-100 object-fit-cover">
+                                <img src="img/q espabiles.jpg" alt="Dispositivos de Red" class="img-fluid w-100 h-100 object-fit-cover"> <!-- Angel aqui cambias la foto de red en el carrousel-->
                             </div>
                         </div>
                     </div>
@@ -258,12 +260,12 @@
                                     </div>
                                 </div>
                                 <div class="d-flex gap-3 mt-auto">
-                                    <a href="maquinaria.html" class="btn btn-light btn-lg px-4">Más Información</a>
-                                    <a href="#productos" class="btn btn-outline-light btn-lg px-4">Ver Productos</a>
+                                    <a href="pages/maquinaria.html" class="btn btn-light btn-lg px-4">Más Información</a>
+                                    <a href="pages/maquinaria.html" class="btn btn-outline-light btn-lg px-4">Ver Productos</a>
                                 </div>
                             </div>
                             <div class="col-lg-6 category-image">
-                                <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80" alt="Maquinaria" class="img-fluid w-100 h-100 object-fit-cover">
+                                <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80" alt="Maquinaria" class="img-fluid w-100 h-100 object-fit-cover"> <!-- Angel aqui cambias la foto de maquinaria en el carrousel-->
                             </div>
                         </div>
                     </div>
@@ -292,12 +294,12 @@
                                     </div>
                                 </div>
                                 <div class="d-flex gap-3 mt-auto">
-                                    <a href="licencias.html" class="btn btn-dark btn-lg px-4">Más Información</a>
-                                    <a href="#productos" class="btn btn-outline-dark btn-lg px-4">Ver Productos</a>
+                                    <a href="pages/licencias.html" class="btn btn-dark btn-lg px-4">Más Información</a>
+                                    <a href="pages/licencias.html" class="btn btn-outline-dark btn-lg px-4">Ver Productos</a>
                                 </div>
                             </div>
                             <div class="col-lg-6 category-image">
-                                <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80" alt="Software" class="img-fluid w-100 h-100 object-fit-cover">
+                                <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80" alt="Software" class="img-fluid w-100 h-100 object-fit-cover"> <!-- Angel aqui cambias la foto de software en el carrousel-->
                             </div>
                         </div>
                     </div>
@@ -475,8 +477,8 @@
             <div class="row g-4">
                 <div class="col-lg-4" data-aos="fade-up">
                     <div class="d-flex align-items-center mb-3">
-                        <div class="logo-icon bg-primary rounded-circle me-2 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-laptop-code text-white"></i>
+                        <div class="footer-logo me-3">
+                            <img src="img/logo.png" alt="Jintex Logo" class="img-fluid" style="height: 50px;">
                         </div>
                         <span class="fw-bold fs-3 text-white">JINTEX</span>
                     </div>

@@ -15,36 +15,40 @@ document.addEventListener('DOMContentLoaded', function() {
     initPerformanceOptimizations();
 });
 
-// ===== PRELOADER =====
+// ===== PRELOADER MEJORADO =====
 function initPreloader() {
     const preloader = document.querySelector('.preloader');
-    const progressBar = document.querySelector('.preloader .progress-bar');
     
-    if (!preloader || !progressBar) return;
+    if (!preloader) return;
     
-    // Simular progreso de carga
-    let progress = 0;
-    const progressInterval = setInterval(() => {
-        progress += Math.random() * 15;
-        if (progress >= 100) {
-            progress = 100;
-            clearInterval(progressInterval);
-            
-            // Completar carga
-            setTimeout(() => {
-                preloader.classList.add('fade-out');
-                setTimeout(() => {
-                    preloader.style.display = 'none';
-                    // Iniciar animaciones después del preloader
-                    document.body.classList.add('loaded');
-                }, 500);
-            }, 300);
-        }
-        progressBar.style.width = `${progress}%`;
-    }, 100);
+    // Para videos MP4 - esperar a que cargue el video
+    const video = preloader.querySelector('video');
+    if (video) {
+        video.addEventListener('loadeddata', function() {
+            // El video está listo, ocultar preloader después de 3 segundos
+            setTimeout(hidePreloader, 3000);
+        });
+        
+        // En caso de error del video, usar fallback
+        video.addEventListener('error', function() {
+            console.log('Error cargando video, usando imagen de fallback');
+            setTimeout(hidePreloader, 2000);
+        });
+    } else {
+        // Para imágenes/GIFs - ocultar después de 3 segundos
+        setTimeout(hidePreloader, 3000);
+    }
+    
+    function hidePreloader() {
+        preloader.classList.add('fade-out');
+        setTimeout(() => {
+            preloader.style.display = 'none';
+            document.body.classList.add('loaded');
+        }, 500);
+    }
 }
 
-// ===== NAVBAR =====
+// ===== NAVBAR MEJORADO =====
 function initNavbar() {
     const navbar = document.querySelector('.custom-navbar');
     const navLinks = document.querySelectorAll('.nav-link');
@@ -74,18 +78,19 @@ function initNavbar() {
         });
     });
     
-    // Efecto hover en logo
-    const logoIcon = document.querySelector('.navbar-brand .logo-icon');
-    if (logoIcon) {
-        logoIcon.addEventListener('mouseenter', () => {
-            logoIcon.style.transform = 'rotate(10deg) scale(1.1)';
+    // Efecto hover en logo del navbar
+    const navbarLogo = document.querySelector('.navbar-logo');
+    if (navbarLogo) {
+        navbarLogo.addEventListener('mouseenter', () => {
+            navbarLogo.style.transform = 'scale(1.05)';
         });
         
-        logoIcon.addEventListener('mouseleave', () => {
-            logoIcon.style.transform = 'rotate(0) scale(1)';
+        navbarLogo.addEventListener('mouseleave', () => {
+            navbarLogo.style.transform = 'scale(1)';
         });
     }
 }
+
 
 // Actualizar enlace activo basado en scroll
 function updateActiveNavLink() {
@@ -199,6 +204,14 @@ function initCarousel() {
         setTimeout(() => {
             nextSlide.classList.add('aos-animate');
         }, 50);
+        
+        // Reiniciar efecto de zoom en cambio de slide
+        resetCarouselImages();
+    });
+    
+    carousel.addEventListener('slid.bs.carousel', function() {
+        // Aplicar efecto de zoom solo al slide activo
+        applyActiveSlideEffects();
     });
     
     // Pausar el carousel cuando el mouse está sobre él
@@ -210,26 +223,33 @@ function initCarousel() {
         carouselInstance.cycle();
     });
     
-    // Efecto parallax para las imágenes del carousel (solo desktop)
-    if (window.innerWidth > 768) {
-        window.addEventListener('scroll', handleCarouselParallax);
-    }
-    
     // Precargar imágenes del carousel
     preloadCarouselImages();
+    
+    // Aplicar efectos iniciales
+    applyActiveSlideEffects();
 }
 
-function handleCarouselParallax() {
-    const carouselImages = document.querySelectorAll('.category-image img');
-    const scrollY = window.scrollY;
-    
-    carouselImages.forEach((img) => {
-        const speed = 0.2;
-        const yPos = -(scrollY * speed);
-        img.style.transform = `translateY(${yPos}px) scale(1.05)`;
+// Aplicar efectos solo al slide activo
+function applyActiveSlideEffects() {
+    const activeSlide = document.querySelector('#categoriesCarousel .carousel-item.active');
+    if (activeSlide) {
+        const activeImage = activeSlide.querySelector('.category-image img');
+        if (activeImage) {
+            activeImage.style.transform = 'scale(1.02)';
+        }
+    }
+}
+
+// Reiniciar efectos de imágenes
+function resetCarouselImages() {
+    const carouselImages = document.querySelectorAll('#categoriesCarousel .category-image img');
+    carouselImages.forEach(img => {
+        img.style.transform = 'scale(1)';
     });
 }
 
+// Precargar imágenes del carousel
 function preloadCarouselImages() {
     const carouselImages = document.querySelectorAll('.category-image img');
     
@@ -239,34 +259,63 @@ function preloadCarouselImages() {
         tempImg.onload = function() {
             img.style.opacity = '1';
         };
+        
+        // Manejar errores de carga
+        tempImg.onerror = function() {
+            console.warn('Error cargando imagen del carousel:', img.src);
+            img.style.opacity = '1'; // Mostrar igualmente
+        };
     });
 }
 
-// ===== FILTRO DE PRODUCTOS =====
+// Inicializar carousel cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+    initCarousel();
+});
+
+// Re-inicializar carousel en redimensionamiento de ventana
+window.addEventListener('resize', function() {
+    // Solo re-aplicar efectos, no reinicializar completamente
+    applyActiveSlideEffects();
+});
+
+// ===== FILTRO DE PRODUCTOS MEJORADO =====
 function initProductFilter() {
     const filterButtons = document.querySelectorAll('#product-filters [data-filter]');
     const products = document.querySelectorAll('.producto');
+    const productosContainer = document.getElementById('productos-container');
     
     if (filterButtons.length === 0 || products.length === 0) return;
+    
+    // Precargar imágenes de productos
+    preloadProductImages();
     
     filterButtons.forEach(button => {
         button.addEventListener('click', function() {
             // Remover clase active de todos los botones
-            filterButtons.forEach(btn => btn.classList.remove('active'));
+            filterButtons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.style.transform = 'translateY(0)';
+            });
             
             // Agregar clase active al botón clickeado
             this.classList.add('active');
+            this.style.transform = 'translateY(-2px)';
             
             const filterValue = this.getAttribute('data-filter');
             
-            // Filtrar productos con animación
-            filterProducts(products, filterValue);
+            // Filtrar productos con animación mejorada
+            filterProducts(products, filterValue, productosContainer);
         });
     });
 }
 
-function filterProducts(products, filterValue) {
+function filterProducts(products, filterValue, container) {
     let visibleCount = 0;
+    const animationDuration = 300;
+    
+    // Ocultar mensaje anterior si existe
+    hideNoProductsMessage();
     
     products.forEach((product, index) => {
         const productCategory = product.getAttribute('data-category');
@@ -274,48 +323,259 @@ function filterProducts(products, filterValue) {
         
         if (shouldShow) {
             visibleCount++;
-            // Animación de entrada
+            // Mostrar producto con animación escalonada
             setTimeout(() => {
+                product.classList.remove('hidden', 'hiding');
+                product.classList.add('showing');
                 product.style.display = 'block';
-                setTimeout(() => {
-                    product.style.opacity = '1';
-                    product.style.transform = 'scale(1)';
-                }, 50);
-            }, index * 100);
+            }, index * 80);
         } else {
-            // Animación de salida
-            product.style.opacity = '0';
-            product.style.transform = 'scale(0.8)';
+            // Ocultar producto con animación
+            product.classList.add('hiding');
+            product.classList.remove('showing');
+            
             setTimeout(() => {
+                product.classList.add('hidden');
                 product.style.display = 'none';
-            }, 300);
+            }, animationDuration);
         }
     });
     
-    // Mostrar mensaje si no hay productos
-    showNoProductsMessage(visibleCount === 0);
+    // Mostrar mensaje si no hay productos después de las animaciones
+    setTimeout(() => {
+        if (visibleCount === 0) {
+            showNoProductsMessage(container);
+        }
+    }, products.length * 80 + animationDuration);
+    
+    // Actualizar contador de productos visibles
+    updateProductCount(visibleCount, products.length);
 }
 
-function showNoProductsMessage(show) {
+function showNoProductsMessage(container) {
     let message = document.getElementById('no-products-message');
     
-    if (show && !message) {
+    if (!message) {
         message = document.createElement('div');
         message.id = 'no-products-message';
         message.className = 'col-12 text-center py-5';
         message.innerHTML = `
-            <div class="text-muted">
+            <div class="text-muted" data-aos="fade-up">
                 <i class="fas fa-search fa-3x mb-3"></i>
-                <h4>No se encontraron productos</h4>
-                <p>Intenta con otra categoría o filtro.</p>
+                <h4 class="mb-3">No se encontraron productos</h4>
+                <p class="mb-4">Intenta con otra categoría o filtro.</p>
+                <button class="btn btn-primary" onclick="resetProductFilter()">
+                    <i class="fas fa-redo me-2"></i>Mostrar Todos
+                </button>
             </div>
         `;
-        document.getElementById('productos-container').appendChild(message);
-    } else if (!show && message) {
-        message.remove();
+        container.appendChild(message);
+        
+        // Animar la aparición del mensaje
+        setTimeout(() => {
+            message.querySelector('div').style.opacity = '1';
+        }, 50);
     }
 }
 
+function hideNoProductsMessage() {
+    const message = document.getElementById('no-products-message');
+    if (message) {
+        message.style.opacity = '0';
+        setTimeout(() => {
+            message.remove();
+        }, 300);
+    }
+}
+
+function resetProductFilter() {
+    const allButton = document.querySelector('#product-filters [data-filter="all"]');
+    if (allButton) {
+        allButton.click();
+    }
+}
+
+function updateProductCount(visible, total) {
+    // Podrías mostrar un contador si lo deseas
+    console.log(`Mostrando ${visible} de ${total} productos`);
+}
+
+// ===== PRECARGA DE IMÁGENES DE PRODUCTOS =====
+function preloadProductImages() {
+    const productImages = document.querySelectorAll('.product-image');
+    
+    productImages.forEach(img => {
+        // Crear imagen fantasma para precarga
+        const tempImg = new Image();
+        tempImg.src = img.src;
+        
+        tempImg.onload = function() {
+            // Marcar imagen como cargada
+            img.classList.add('loaded');
+            img.style.opacity = '1';
+        };
+        
+        tempImg.onerror = function() {
+            console.warn('Error cargando imagen del producto:', img.src);
+            img.style.opacity = '1'; // Mostrar igualmente
+            img.alt = 'Imagen no disponible';
+        };
+    });
+}
+
+// ===== INTERACCIONES DE PRODUCTOS MEJORADAS =====
+function initProductInteractions() {
+    const productCards = document.querySelectorAll('.product-card');
+    const addToCartButtons = document.querySelectorAll('.add-to-cart');
+    
+    // Efectos hover mejorados para tarjetas de productos
+    productCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-8px)';
+            const image = this.querySelector('.product-image');
+            if (image) {
+                image.style.transform = 'scale(1.08)';
+            }
+            
+            // Efecto de brillo en el badge
+            const badge = this.querySelector('.badge');
+            if (badge) {
+                badge.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+            }
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            const image = this.querySelector('.product-image');
+            if (image) {
+                image.style.transform = 'scale(1)';
+            }
+            
+            // Restaurar badge
+            const badge = this.querySelector('.badge');
+            if (badge) {
+                badge.style.boxShadow = 'var(--shadow-sm)';
+            }
+        });
+        
+        // Click en la tarjeta (opcional - podría abrir detalles)
+        card.addEventListener('click', function(e) {
+            // Evitar que se active cuando se hace click en el botón de carrito
+            if (!e.target.closest('.add-to-cart')) {
+                console.log('Abrir detalles del producto');
+                // Aquí podrías abrir un modal o redirigir a página de detalles
+            }
+        });
+    });
+    
+    // Funcionalidad "Consultar" mejorada
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation(); // Evitar que se propague al card
+            
+            const productCard = this.closest('.product-card');
+            const productName = productCard.querySelector('.card-title').textContent;
+            const productPrice = productCard.querySelector('.h5').textContent;
+            const productCategory = productCard.closest('.producto').getAttribute('data-category');
+            
+            // Animación de confirmación mejorada
+            animateAddToCart(this, productName, productPrice, productCategory);
+        });
+    });
+}
+
+function animateAddToCart(button, productName, productPrice, category) {
+    const originalText = button.innerHTML;
+    const originalClass = button.className;
+    
+    // Animación de éxito
+    button.innerHTML = '<i class="fas fa-check me-1"></i>Consultado';
+    button.className = 'btn btn-success btn-sm rounded-pill add-to-cart';
+    button.style.transform = 'scale(0.95)';
+    
+    // Mostrar notificación mejorada
+    showProductNotification(productName, productPrice, category);
+    
+    // Efecto de vibración en la tarjeta
+    const productCard = button.closest('.product-card');
+    productCard.style.animation = 'vibrate 0.3s ease';
+    
+    setTimeout(() => {
+        productCard.style.animation = '';
+    }, 300);
+    
+    // Restaurar estado después de 2 segundos
+    setTimeout(() => {
+        button.innerHTML = originalText;
+        button.className = originalClass;
+        button.style.transform = '';
+    }, 2000);
+}
+
+function showProductNotification(productName, productPrice, category) {
+    // Crear notificación toast mejorada
+    const toast = document.createElement('div');
+    toast.className = 'position-fixed top-0 end-0 p-3';
+    toast.style.zIndex = '9999';
+    toast.style.marginTop = '80px'; // Debajo del navbar
+    
+    const categoryColors = {
+        'originales': 'primary',
+        'reacondicionados': 'success',
+        'red': 'info',
+        'licencias': 'warning'
+    };
+    
+    const badgeColor = categoryColors[category] || 'primary';
+    
+    toast.innerHTML = `
+        <div class="toast show" role="alert" style="min-width: 300px;">
+            <div class="toast-header bg-${badgeColor} text-white">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong class="me-auto">Producto consultado</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close btn-close-white" onclick="this.closest('.toast').remove()"></button>
+            </div>
+            <div class="toast-body">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <h6 class="mb-1">${productName}</h6>
+                        <p class="mb-1 text-muted small">${productPrice}</p>
+                    </div>
+                    <span class="badge bg-${badgeColor}">${category}</span>
+                </div>
+                <div class="mt-2 pt-2 border-top">
+                    <small class="text-muted">Te contactaremos pronto con más información</small>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(toast);
+    
+    // Auto-eliminar después de 4 segundos
+    setTimeout(() => {
+        if (toast.parentNode) {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                toast.remove();
+            }, 300);
+        }
+    }, 4000);
+}
+
+// Animación de vibración para CSS
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes vibrate {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-2px); }
+        75% { transform: translateX(2px); }
+    }
+`;
+document.head.appendChild(style);
 // ===== SCROLL SUAVE =====
 function initSmoothScroll() {
     const scrollLinks = document.querySelectorAll('a[href^="#"]');
