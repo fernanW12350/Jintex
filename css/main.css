@@ -13,13 +13,16 @@
     --info: #00b4d8;
     --danger: #e63946;
     
-    /* Nueva paleta de colores oscuros relajados */
+    /* Nueva paleta de colores oscuros con textos blancos suaves */
     --dark-bg: #1e293b;
     --dark-surface: #2d3748;
     --dark-card: #374151;
     --dark-border: #4b5563;
-    --dark-text: #e5e7eb;
-    --dark-text-muted: #9ca3af;
+    
+    /* Textos blancos suaves - no demasiado brillantes */
+    --dark-text: #f8fafc;           /* Blanco muy suave */
+    --dark-text-muted: #e2e8f0;     /* Blanco grisáceo suave */
+    --dark-text-secondary: #cbd5e1; /* Blanco más suave para textos secundarios */
     --dark-hover: #3f4a5c;
     
     --light: #f8f9fa;
@@ -210,6 +213,48 @@ img {
     }
 }
 
+/* ===== NAVBAR ===== */
+.custom-navbar {
+    background: var(--dark-surface) !important;
+    border-bottom: 1px solid var(--dark-border);
+}
+
+.navbar-brand {
+    padding: 0.5rem 0;
+}
+
+.navbar-logo {
+    height: 40px;
+    width: auto;
+    transition: var(--transition);
+}
+
+.navbar-brand:hover .navbar-logo {
+    transform: scale(1.05);
+}
+
+.navbar-nav .nav-link {
+    color: var(--dark-text) !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: var(--transition);
+    border-radius: var(--border-radius);
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    color: var(--primary) !important;
+    background: rgba(58, 134, 255, 0.1);
+}
+
+.navbar-toggler {
+    border: 1px solid var(--dark-border);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28248, 250, 252, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
 /* ===== HERO SECTION ===== */
 .hero-section {
     background: linear-gradient(135deg, var(--dark-surface) 0%, var(--dark-card) 100%);
@@ -306,6 +351,7 @@ img {
     transition: var(--transition);
     cursor: pointer;
     border: 1px solid var(--dark-border);
+    color: var(--dark-text);
 }
 
 .floating-card:hover {
@@ -347,6 +393,7 @@ img {
     transition: var(--transition);
     border: 1px solid var(--dark-border);
     background: var(--dark-card);
+    color: var(--dark-text);
 }
 
 .hover-card:hover {
@@ -449,10 +496,12 @@ img {
     padding: 20px;
     border-radius: 12px;
     backdrop-filter: blur(10px);
+    color: var(--dark-text);
 }
 
 .bg-warning .category-features {
     background: rgba(0, 0, 0, 0.1);
+    color: var(--dark-text);
 }
 
 /* Indicadores personalizados */
@@ -535,6 +584,7 @@ img {
     overflow: hidden;
     border: 1px solid var(--dark-border) !important;
     background: var(--dark-card);
+    color: var(--dark-text);
 }
 
 .product-card:hover {
@@ -810,6 +860,20 @@ img {
 footer {
     background: var(--gray-900) !important;
     border-top: 1px solid var(--dark-border);
+    color: var(--dark-text);
+}
+
+footer h5,
+footer h6 {
+    color: var(--dark-text);
+}
+
+footer p {
+    color: var(--dark-text-muted);
+}
+
+footer .text-light {
+    color: var(--dark-text-muted) !important;
 }
 
 .social-icon {
@@ -818,14 +882,16 @@ footer {
     justify-content: center;
     width: 40px;
     height: 40px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(248, 250, 252, 0.1);
     border-radius: 50%;
     transition: var(--transition);
+    color: var(--dark-text);
 }
 
 .social-icon:hover {
     background: var(--primary);
     transform: translateY(-3px);
+    color: white;
 }
 
 .footer-link {
@@ -835,6 +901,15 @@ footer {
 
 .footer-link:hover {
     color: var(--primary) !important;
+}
+
+/* Estilos específicos para listas del footer */
+footer .list-unstyled li {
+    color: var(--dark-text-muted);
+}
+
+footer .list-unstyled li i {
+    color: var(--dark-text-secondary);
 }
 
 /* ===== BACK TO TOP ===== */
@@ -881,6 +956,10 @@ footer {
     color: var(--dark-text-muted) !important;
 }
 
+.text-white {
+    color: var(--dark-text) !important;
+}
+
 .border {
     border-color: var(--dark-border) !important;
 }
@@ -888,11 +967,13 @@ footer {
 .card {
     background-color: var(--dark-card);
     border: 1px solid var(--dark-border);
+    color: var(--dark-text);
 }
 
 .card-header {
     background-color: var(--dark-surface);
     border-bottom: 1px solid var(--dark-border);
+    color: var(--dark-text);
 }
 
 .form-control {
@@ -909,7 +990,11 @@ footer {
 }
 
 .form-control::placeholder {
-    color: var(--dark-text-muted);
+    color: var(--dark-text-secondary);
+}
+
+.lead.text-muted {
+    color: var(--dark-text-muted) !important;
 }
 
 /* ===== ANIMACIONES PERSONALIZADAS ===== */
