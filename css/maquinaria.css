@@ -1,0 +1,341 @@
+/* ===== IMPORTAR VARIABLES Y ESTILOS BASE ===== */
+@import url('main.css');
+
+/* ===== HERO SECTION ESPECÍFICO PARA MAQUINARIA ===== */
+.maquinaria-hero-section {
+    background: linear-gradient(135deg, var(--dark-surface) 0%, var(--dark-card) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.maquinaria-hero-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(58, 134, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(56, 176, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(255, 158, 0, 0.1) 0%, transparent 50%);
+    animation: hardwarePulse 6s ease-in-out infinite;
+}
+
+@keyframes hardwarePulse {
+    0%, 100% {
+        opacity: 0.7;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.9;
+        transform: scale(1.02);
+    }
+}
+
+/* ===== SERVICIOS ESPECIALIZADOS MAQUINARIA ===== */
+.service-features {
+    text-align: left;
+}
+
+.service-features .fa-check {
+    font-size: 0.8rem;
+}
+
+/* ===== PRODUCTOS DE MAQUINARIA ===== */
+.product-specs {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.75rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--dark-border);
+}
+
+.product-specs .d-flex {
+    padding: 0.25rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.product-specs .d-flex:last-child {
+    border-bottom: none;
+}
+
+/* ===== SISTEMA DE ESTRELLAS ===== */
+.product-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stars {
+    display: flex;
+    gap: 0.1rem;
+}
+
+.stars i {
+    font-size: 0.9rem;
+}
+
+/* ===== FILTROS ESPECIALIZADOS PARA MAQUINARIA ===== */
+#maquinaria-filters .btn {
+    font-weight: 600;
+    padding: 0.5rem 1.25rem;
+    border: 2px solid var(--primary);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    background: var(--dark-card);
+    color: var(--dark-text);
+}
+
+#maquinaria-filters .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+#maquinaria-filters .btn:hover::before {
+    left: 100%;
+}
+
+#maquinaria-filters .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+    background: var(--dark-hover);
+}
+
+#maquinaria-filters .btn-outline-primary.active {
+    background: var(--gradient-primary);
+    border-color: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+/* ===== ANIMACIONES ESPECÍFICAS PARA HARDWARE ===== */
+@keyframes cpuCycle {
+    0% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+}
+
+.hardware-animation {
+    animation: cpuCycle 2s ease-in-out infinite;
+}
+
+/* ===== BADGES ESPECIALIZADOS MAQUINARIA ===== */
+.badge.bg-info {
+    background: linear-gradient(135deg, var(--info) 0%, #0099cc 100%) !important;
+}
+
+.badge.bg-warning {
+    background: linear-gradient(135deg, var(--warning) 0%, #cc7a00 100%) !important;
+}
+
+/* ===== GARANTÍAS Y CERTIFICACIONES ===== */
+.certification-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+}
+
+.certification-item {
+    text-align: center;
+    padding: 1rem;
+    background: var(--dark-surface);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--dark-border);
+    transition: var(--transition);
+}
+
+.certification-item:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+}
+
+/* ===== RESPONSIVE ESPECÍFICO MAQUINARIA ===== */
+@media (max-width: 768px) {
+    .tech-feature {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .tech-feature i {
+        font-size: 1.5rem !important;
+    }
+    
+    .service-features {
+        text-align: center;
+    }
+    
+    .product-specs {
+        font-size: 0.8rem;
+    }
+    
+    .certification-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    #maquinaria-filters {
+        gap: 0.5rem;
+    }
+    
+    #maquinaria-filters .btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .maquinaria-hero-section .hero-title {
+        font-size: 2rem;
+    }
+    
+    #maquinaria-filters .btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+    
+    .tech-feature {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .tech-feature i {
+        font-size: 1.2rem !important;
+    }
+}
+
+/* ===== MEJORAS VISUALES PARA HARDWARE ===== */
+.floating-card .fa-server,
+.floating-card .fa-desktop,
+.floating-card .fa-laptop,
+.floating-card .fa-microchip {
+    font-size: 1.5rem;
+}
+
+.card:hover .fa-microchip,
+.card:hover .fa-memory,
+.card:hover .fa-hdd {
+    animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-5px);
+    }
+    60% {
+        transform: translateY(-2px);
+    }
+}
+
+/* ===== EFECTOS DE HARDWARE MEJORADOS ===== */
+.hardware-glow {
+    position: relative;
+}
+
+.hardware-glow::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, var(--primary), var(--success), var(--warning));
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.hardware-glow:hover::before {
+    opacity: 0.3;
+}
+
+/* ===== ESTILOS PARA ICONOS DE HARDWARE ===== */
+.hardware-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    transition: var(--transition);
+}
+
+.hardware-icon i {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.hardware-icon:hover {
+    transform: scale(1.1) rotate(10deg);
+}
+
+/* ===== ANIMACIÓN DE CIRCUITOS ===== */
+.circuit-flow {
+    position: relative;
+    overflow: hidden;
+}
+
+.circuit-flow::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    animation: circuitStream 3s linear infinite;
+}
+
+@keyframes circuitStream {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+/* ===== ESPECIFICACIONES TÉCNICAS DETALLADAS ===== */
+.specs-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.specs-table td {
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--dark-border);
+}
+
+.specs-table tr:last-child td {
+    border-bottom: none;
+}
+
+.specs-table .spec-name {
+    font-weight: 600;
+    color: var(--dark-text);
+}
+
+.specs-table .spec-value {
+    color: var(--dark-text-muted);
+    text-align: right;
+}

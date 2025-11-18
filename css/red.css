@@ -1,0 +1,272 @@
+/* css/red.css */
+
+/* ===== IMPORTAR VARIABLES Y ESTILOS BASE ===== */
+@import url('main.css');
+
+/* ===== HERO SECTION ESPECÍFICO PARA RED ===== */
+.red-hero-section {
+    background: linear-gradient(135deg, var(--dark-surface) 0%, var(--dark-card) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.red-hero-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(58, 134, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 184, 216, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(255, 158, 0, 0.1) 0%, transparent 50%);
+    animation: networkPulse 8s ease-in-out infinite;
+}
+
+@keyframes networkPulse {
+    0%, 100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
+/* ===== SERVICIOS ESPECIALIZADOS ===== */
+.service-features {
+    text-align: left;
+}
+
+.service-features .fa-check {
+    font-size: 0.8rem;
+}
+
+/* ===== PRODUCTOS DE RED ===== */
+.product-specs {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.75rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--dark-border);
+}
+
+.product-specs .d-flex {
+    padding: 0.25rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.product-specs .d-flex:last-child {
+    border-bottom: none;
+}
+
+/* ===== PROCESO DE TRABAJO ===== */
+.process-step {
+    width: 80px;
+    height: 80px;
+    font-weight: 700;
+    box-shadow: var(--shadow-lg);
+    transition: var(--transition);
+}
+
+.process-step:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* ===== FILTROS ESPECIALIZADOS PARA RED ===== */
+#red-filters .btn {
+    font-weight: 600;
+    padding: 0.5rem 1.25rem;
+    border: 2px solid var(--primary);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    background: var(--dark-card);
+    color: var(--dark-text);
+}
+
+#red-filters .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+#red-filters .btn:hover::before {
+    left: 100%;
+}
+
+#red-filters .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+    background: var(--dark-hover);
+}
+
+#red-filters .btn-outline-primary.active {
+    background: var(--gradient-primary);
+    border-color: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+/* ===== ANIMACIONES ESPECÍFICAS PARA RED ===== */
+@keyframes dataFlow {
+    0% {
+        stroke-dashoffset: 1000;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.network-animation {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: dataFlow 3s ease-in-out infinite;
+}
+
+/* ===== BADGES ESPECIALIZADOS ===== */
+.badge.bg-info {
+    background: linear-gradient(135deg, var(--info) 0%, #0099cc 100%) !important;
+}
+
+.badge.bg-warning {
+    background: linear-gradient(135deg, var(--warning) 0%, #cc7a00 100%) !important;
+}
+
+/* ===== RESPONSIVE ESPECÍFICO ===== */
+@media (max-width: 768px) {
+    .process-step {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .process-step span {
+        font-size: 1.1rem;
+    }
+    
+    .service-features {
+        text-align: center;
+    }
+    
+    .product-specs {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .red-hero-section .hero-title {
+        font-size: 2rem;
+    }
+    
+    #red-filters .btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+    
+    .process-step {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* ===== MEJORAS VISUALES PARA RED ===== */
+.floating-card .fa-ethernet,
+.floating-card .fa-wifi,
+.floating-card .fa-server {
+    font-size: 1.5rem;
+}
+
+.card:hover .fa-network-wired,
+.card:hover .fa-cogs,
+.card:hover .fa-wifi {
+    animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-5px);
+    }
+    60% {
+        transform: translateY(-2px);
+    }
+}
+
+/* ===== EFECTOS DE RED MEJORADOS ===== */
+.network-glow {
+    position: relative;
+}
+
+.network-glow::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, var(--primary), var(--info), var(--success));
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.network-glow:hover::before {
+    opacity: 0.3;
+}
+
+/* ===== ESTILOS PARA ICONOS DE RED ===== */
+.network-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    transition: var(--transition);
+}
+
+.network-icon i {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.network-icon:hover {
+    transform: scale(1.1) rotate(10deg);
+}
+
+/* ===== ANIMACIÓN DE DATOS FLUYENDO ===== */
+.data-flow {
+    position: relative;
+    overflow: hidden;
+}
+
+.data-flow::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    animation: dataStream 2s linear infinite;
+}
+
+@keyframes dataStream {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
