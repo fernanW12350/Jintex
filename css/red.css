@@ -1,5 +1,3 @@
-/* css/red.css */
-
 /* ===== IMPORTAR VARIABLES Y ESTILOS BASE ===== */
 @import url('main.css');
 
@@ -200,7 +198,7 @@
     }
 }
 
-/* ===== EFECTOS DE RED MEJORADOS ===== */
+/* ===== EFECTOS DE RED ===== */
 .network-glow {
     position: relative;
 }
