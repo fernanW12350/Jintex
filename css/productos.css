@@ -1,6 +1,6 @@
 /* ===== ESTILOS ESPECÍFICOS PARA PÁGINA DE PRODUCTOS ===== */
 
-/* Tarjetas de categorías  hola*/  
+/* Tarjetas de categorías */
 .category-card {
     transition: all 0.3s ease;
     border: 1px solid var(--dark-border);

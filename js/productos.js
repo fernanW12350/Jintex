@@ -1,6 +1,6 @@
 // ===== JAVASCRIPT ESPECÍFICO PARA PÁGINA DE PRODUCTOS =====
 
-// Datos de productos (simulados) hola
+// Datos de productos (simulados)
 const productosData = [
     {
         id: 1,
