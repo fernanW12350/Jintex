@@ -1,6 +1,6 @@
 // js/main.js
 
-// ===== CONFIGURACIÓN INICIAL =====
+// ===== CONFIGURACIÓN INICIAL ===== hola
 document.addEventListener('DOMContentLoaded', function() {
     // Inicializar todas las funcionalidades
     initPreloader();

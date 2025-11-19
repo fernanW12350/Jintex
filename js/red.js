@@ -2,7 +2,7 @@
 
 // ===== CONFIGURACIÓN INICIAL ESPECÍFICA PARA RED =====
 document.addEventListener('DOMContentLoaded', function() {
-    // Inicializar todas las funcionalidades específicas de red
+    // Inicializar todas las funcionalidades específicas de red hola
     initRedPreloader();
     initRedAnimations();
     initRedProductFilter();

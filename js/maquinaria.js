@@ -1,6 +1,6 @@
 // ===== CONFIGURACIÓN INICIAL ESPECÍFICA PARA MAQUINARIA =====
 document.addEventListener('DOMContentLoaded', function() {
-    // Inicializar todas las funcionalidades específicas de maquinaria
+    // Inicializar todas las funcionalidades específicas de maquinaria hola
     initMaquinariaPreloader();
     initMaquinariaAnimations();
     initMaquinariaProductFilter();

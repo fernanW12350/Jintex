@@ -1,4 +1,4 @@
-// ===== JAVASCRIPT ESPECÍFICO PARA PÁGINA DE LICENCIAS =====
+// ===== JAVASCRIPT ESPECÍFICO PARA PÁGINA DE LICENCIAS ===== hola
 
 document.addEventListener('DOMContentLoaded', function() {
     initLicensePage();

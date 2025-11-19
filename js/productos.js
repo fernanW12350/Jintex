@@ -1,6 +1,6 @@
 // ===== JAVASCRIPT ESPECÍFICO PARA PÁGINA DE PRODUCTOS =====
 
-// Datos de productos (simulados)
+// Datos de productos (simulados) hola
 const productosData = [
     {
         id: 1,
@@ -238,6 +238,7 @@ let vistaActual = 'grid';
 let productosPorPagina = 8;
 let paginaActual = 1;
 
+// Inicializar la página cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
     initProductosPage();
 });
@@ -251,6 +252,17 @@ function initProductosPage() {
     renderizarProductos();
     actualizarContador();
     initPaginacion();
+    
+    // Asegurar que AOS se inicialice si está disponible
+    if (typeof AOS !== 'undefined') {
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            mirror: false,
+            offset: 100
+        });
+    }
 }
 
 // ===== FILTROS =====
@@ -293,6 +305,19 @@ function filtrarProductos(categoria) {
     actualizarContador();
 }
 
+// Función para filtrar por categoría desde las tarjetas
+function filtrarPorCategoria(categoria) {
+    const filterButton = document.querySelector(`#product-filters [data-filter="${categoria}"]`);
+    if (filterButton) {
+        filterButton.click();
+        
+        // Scroll suave al catálogo
+        document.getElementById('catalogo').scrollIntoView({ 
+            behavior: 'smooth' 
+        });
+    }
+}
+
 // ===== BÚSQUEDA =====
 function initBusqueda() {
     const searchInput = document.getElementById('searchInput');
@@ -301,7 +326,13 @@ function initBusqueda() {
         const searchTerm = this.value.toLowerCase().trim();
         
         if (searchTerm === '') {
-            productosFiltrados = [...productosData];
+            // Si no hay término de búsqueda, usar filtros actuales
+            const activeFilter = document.querySelector('#product-filters .active');
+            if (activeFilter) {
+                filtrarProductos(activeFilter.getAttribute('data-filter'));
+            } else {
+                productosFiltrados = [...productosData];
+            }
         } else {
             productosFiltrados = productosData.filter(producto => 
                 producto.nombre.toLowerCase().includes(searchTerm) ||
@@ -369,7 +400,8 @@ function initOrdenacion() {
                 productosFiltrados.sort((a, b) => b.rating - a.rating);
                 break;
             default:
-                productosFiltrados = [...productosData];
+                // No hacer nada, mantener el orden actual
+                break;
         }
         
         renderizarProductos();
@@ -583,7 +615,7 @@ function animateAddToCart(button, producto) {
     
     // Animación de éxito
     button.innerHTML = '<i class="fas fa-check me-1"></i>Consultado';
-    button.className = 'btn btn-success btn-sm rounded-pill add-to-cart';
+    button.className = button.className.replace('btn-primary', 'btn-success');
     button.style.transform = 'scale(0.95)';
     
     // Mostrar notificación
@@ -719,10 +751,16 @@ function cambiarPagina(nuevaPagina) {
     paginaActual = nuevaPagina;
     renderizarProductos();
     initPaginacion();
-    window.scrollTo({
-        top: document.getElementById('catalogo').offsetTop - 100,
-        behavior: 'smooth'
-    });
+    actualizarContador();
+    
+    // Scroll suave al inicio del catálogo
+    const catalogoSection = document.getElementById('catalogo');
+    if (catalogoSection) {
+        window.scrollTo({
+            top: catalogoSection.offsetTop - 100,
+            behavior: 'smooth'
+        });
+    }
 }
 
 // ===== UTILIDADES =====
@@ -730,7 +768,9 @@ function actualizarContador() {
     const visibleCount = document.getElementById('visibleCount');
     const totalCount = document.getElementById('totalCount');
     
-    const productosVisibles = Math.min(productosFiltrados.length, productosPorPagina);
+    const inicio = (paginaActual - 1) * productosPorPagina;
+    const fin = Math.min(inicio + productosPorPagina, productosFiltrados.length);
+    const productosVisibles = fin - inicio;
     
     visibleCount.textContent = productosVisibles;
     totalCount.textContent = productosFiltrados.length;
@@ -753,6 +793,12 @@ function resetFiltros() {
     if (vistaActual !== 'grid') {
         document.getElementById('gridView').click();
     }
+    
+    // Restablecer paginación
+    paginaActual = 1;
+    renderizarProductos();
+    initPaginacion();
+    actualizarContador();
 }
 
 // ===== ANIMACIONES ESPECÍFICAS =====
@@ -770,23 +816,10 @@ if (!document.querySelector('style[data-productos-animations]')) {
     document.head.appendChild(style);
 }
 
-// ===== INICIALIZACIÓN ADICIONAL =====
-document.addEventListener('DOMContentLoaded', function() {
-    // Asegurar que AOS se inicialice si está disponible
-    if (typeof AOS !== 'undefined') {
-        AOS.init({
-            duration: 800,
-            easing: 'ease-in-out',
-            once: true,
-            mirror: false,
-            offset: 100
-        });
-    }
-});
-
 // Exportar funciones para uso global si es necesario
 window.Productos = {
     initProductosPage,
     resetFiltros,
-    showProductNotification
+    showProductNotification,
+    filtrarPorCategoria
 };
